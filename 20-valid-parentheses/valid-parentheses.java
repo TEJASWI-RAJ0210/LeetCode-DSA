@@ -1,22 +1,20 @@
 class Solution {
     public boolean isValid(String s) {
-        Deque<Character> stack = new ArrayDeque<>();
-        Map<Character, Character> pairs = new HashMap<>();
-
-        pairs.put(')','(');
-        pairs.put(']','[');
-        pairs.put('}','{');
-
-        for(char c: s.toCharArray()){
-            if(pairs.containsValue(c)){
-                stack.push(c);
+        Stack<Character>st=new Stack<>();
+        int n=s.length();
+        for(int i=0;i<n;i++){
+            if(s.charAt(i)=='(' || s.charAt(i)=='{' || s.charAt(i)=='['){
+                st.push(s.charAt(i));
+            }else{
+                if(st.isEmpty()) return false;
+             char top=st.pop();
+             char curr=s.charAt(i);
+            if(top!='(' && curr==')' || top!='{' && curr=='}' || top!='[' && curr==']'){
+             return false;
             }
-            else if(pairs.containsKey(c)){
-                if(stack.isEmpty() || stack.pop() != pairs.get(c)){
-                    return false;
-                }
-            }
-        } 
-        return stack.isEmpty();
+          }
+        }
+        return st.isEmpty();
+
     }
 }
